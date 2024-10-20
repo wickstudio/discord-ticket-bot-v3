@@ -1,0 +1,168 @@
+{
+  "buttons": {
+    "options": "Options",
+    "claim": "Claim"
+  },
+  "options": {
+    "selectPlaceholder": "Choose an option 🎟️",
+    "selectMenuPrompt": "Please select an option: 🎟️",
+    "noPermission": "You do not have permission to use this. ❌",
+    "ticketDataNotFound": "Ticket data not found. ❌",
+    "claimLabel": "Claim",
+    "closeLabel": "Close",
+    "renameLabel": "Rename",
+    "remindDMLabel": "Remind DM User",
+    "addUserLabel": "Add a User"
+  },
+  "addUser": {
+    "selectMenuPlaceholder": "Select a user to add ➕",
+    "selectUserPrompt": "Please select a user to add to the ticket: ➕",
+    "userNotSelected": "No user was selected. Please try again. ❌",
+    "userNotFound": "User not found. Please try again. ❌",
+    "alreadyInChannel": "The user is already added to this ticket. ❗",
+    "addFailed": "Failed to add the user to the ticket. ❌",
+    "addedSuccessfully": "Successfully added [user] to the ticket. ✅",
+    "dmNotification": "You have been added to a ticket: [channel] in [guild]. 🎫"
+  },
+  "feedback": {
+    "title": "We value your feedback 💬",
+    "description": "Please rate your experience: ⭐",
+    "modalTitle": "Your Feedback 📝",
+    "modalLabel": "Additional Feedback (optional): 🗒️",
+    "noMessage": "No additional feedback provided. ❗",
+    "receivedTitle": "Feedback Received 📨",
+    "user": "User 👤",
+    "rating": "Rating ⭐",
+    "message": "Message ✉️",
+    "ticketNumber": "Ticket Number 📋",
+    "logChannelNotFound": "Feedback log channel not found. ❌",
+    "thankYou": "Thank you for your feedback! 🙏"
+  },
+  "feedbackRating": {
+    "invalidRating": "Invalid rating selected. ❌",
+    "feedbackReceived": "Thank you for your feedback! 🙏"
+  },
+  "setup": {
+    "Description": "Set up ticket message 🛠️",
+    "SelectPlaceholder": "Select from the options 🎟️",
+    "success": "Setup completed successfully! 🎉"
+  },
+  "setLang": {
+    "success": "Language set to English successfully. 🌐"
+  },
+  "remindDM": {
+    "modalTitle": "Send Reminder DM 📩",
+    "modalLabel": "Enter your message 📝",
+    "userNotFound": "User not found. ❌",
+    "dmContent": "[admin] has sent you a reminder regarding your ticket [channel]:\n\n[message]",
+    "success": "Reminder sent successfully. ✅",
+    "dmFailed": "Failed to send DM to the user. ❌"
+  },
+  "addSection": {
+    "Description": "Add a new section ➕",
+    "SelectPlaceholder": "Select from the options 🎟️",
+    "success": "Section added successfully! ✅",
+    "SectionName": "Section 🗂️",
+    "SectionNameDescription": "Name of the section you want to create",
+    "Role": "Role 👥",
+    "RoleDescription": "Role for section moderators",
+    "image": "Image 🖼️",
+    "imageDescription": "Image for the ticket",
+    "missingOptions": "Missing required options. ❌",
+    "error": "The section you're trying to add already exists. ❌",
+    "emoji": "Emoji for the section (optional) 😊",
+    "emojiError": "Error in selecting the emoji. ❌"
+  },
+  "deleteSection": {
+    "Description": "Delete section 🗑️",
+    "SelectPlaceholder": "Section name 🗂️",
+    "deleteMessage": "Choose the section you want to delete 🗑️",
+    "success": "Section deleted successfully! ✅"
+  },
+  "editSettings": {
+    "Description": "Configure ticket and log channels ⚙️",
+    "success": "Channels configured successfully! ✅",
+    "error": "Error in selecting channels. ❌",
+    "category": "Ticket channel 🎟️",
+    "logs": "Logs channel 📜",
+    "BACKGROUND": "Custom background for ticket message 🖼️",
+    "LINE": "Custom line image for ticket message (optional) 🖌️",
+    "SECTION_TYPE": "Display method (Buttons or Menu) 🎛️"
+  },
+  "claim": {
+    "userClaimError": "You cannot claim the ticket you opened. ❌",
+    "claimedBy": "Ticket claimed by: [user]. 🔒",
+    "missingPermission": "You don't have permission to claim this ticket. ❌"
+  },
+  "close": {
+    "confirm": "Are you sure you want to close this ticket? ❓",
+    "yes": "Yes ✅",
+    "no": "No ❌",
+    "deleteTimer": "Ticket will be deleted after 5 seconds. 🕔",
+    "ticketDataNotFound": "Ticket data not found. ❌",
+    "closeSuccess": "The ticket has been successfully closed.",
+    "closeFailed": "Failed to close the ticket. Please try again later."
+  },
+  "confirmNo": {
+    "cancelConfirmation": "Closing this ticket confirmation canceled. ❌"
+  },
+  "confirmYes": {
+    "closed": "The ticket has been closed.",
+    "save": "Save",
+    "delete": "Delete",
+    "ticketClosed": "Your ticket has been closed.",
+    "openedBy": "Opened By 👤",
+    "claimedBy": "Claimed By 🔒",
+    "noOne": "No one",
+    "closedBy": "Closed By 🔒",
+    "openTime": "Opened At 🕒",
+    "closeTime": "Closed At 🕒",
+    "download": "Download Transcript",
+    "success": "Section added successfully!",
+    "error": "A section with this name already exists.",
+    "writeError": "There was an error saving the configuration.",
+    "ticketClosedNotification": "Your ticket has been automatically saved and closed."
+  },
+  "delete": {
+    "deleteTimer": "Ticket will be deleted after 5 seconds. 🕔"
+  },
+  "rename": {
+    "missingPremissions": "You don't have permission. ❌",
+    "nameChanged": "Name changed successfully. ✏️✅",
+    "modalTitle": "Change your ticket name 📝",
+    "modalLabel": "Please enter the new name for the ticket: 🆕"
+  },
+  "save": {
+    "noReason": "No reason provided. ❗",
+    "closeReason": "Reason 📝",
+    "closed": "This ticket has been closed. ✅",
+    "ticketClosed": "Your ticket has been closed. 🔒",
+    "openedBy": "Ticket opened by 👤",
+    "claimedBy": "Ticket claimed by 👥",
+    "noOne": "No one ❗",
+    "closedBy": "Ticket closed by ❌",
+    "openTime": "Ticket open time 🕒",
+    "closeTime": "Ticket close time 🕒",
+    "download": "Download ticket 📥",
+    "saved": "Ticket saved successfully. 💾"
+  },
+  "select": {
+    "helloUser": "Welcome **[user]**, - [role]",
+    "options": "Options ⚙️",
+    "claim": "Claim ticket 🔒",
+    "close": "Close ticket ❌",
+    "rename": "Rename ticket ✏️",
+    "created": "Your ticket has been created in: [channel] 🎟️",
+    "alreadyCreated": "You already have a ticket. 🎫"
+  },
+  "deleteTicket": {
+    "confirmationTitle": "Delete Ticket Confirmation",
+    "confirmationDescription": "Are you sure you want to delete this ticket? This action cannot be undone.",
+    "deleteButton": "Delete Ticket",
+    "cancelButton": "Cancel",
+    "deletionSuccess": "Ticket channel has been deleted successfully.",
+    "deletionFailed": "Failed to delete the ticket. Please try again later.",
+    "deletionCancelled": "Ticket deletion has been cancelled.",
+    "deletionCancelledDescription": "Ticket deletion has been cancelled."
+  }
+}

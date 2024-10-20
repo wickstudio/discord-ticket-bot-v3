@@ -1,0 +1,276 @@
+<%- include('partials/header', { pageTitle: 'Dashboard Home', activePage: 'home' }) %>
+
+<!-- Dashboard Overview -->
+<div class="text-center mb-5">
+    <h1 class="display-4 text-light animate__animated animate__fadeInDown">Welcome, Admin!</h1>
+    <p class="lead text-light animate__animated animate__fadeInUp animate__delay-1s">Manage your Discord server effortlessly with our comprehensive dashboard.</p>
+</div>
+
+<!-- Alert Messages -->
+<% if (typeof message !== 'undefined' && message) { %>
+    <div class="alert alert-success alert-dismissible fade show animate__animated animate__fadeIn" role="alert">
+        <i class="fa-solid fa-check-circle me-2"></i> <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+<% if (typeof error !== 'undefined' && error) { %>
+    <div class="alert alert-danger alert-dismissible fade show animate__animated animate__fadeIn" role="alert">
+        <i class="fa-solid fa-exclamation-triangle me-2"></i> <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<% } %>
+
+<!-- Overview Cards -->
+<div class="row g-4">
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-light bg-primary h-100 shadow-sm card-hover">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-layer-group fa-3x mb-3"></i>
+                <h5 class="card-title">Total Sections</h5>
+                <p class="card-text fs-3"><%= sectionCount %></p>
+            </div>
+        </div>
+    </div>
+    <!-- Total Ticket Options Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-light bg-secondary h-100 shadow-sm card-hover">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-ticket fa-3x mb-3"></i>
+                <h5 class="card-title">Ticket Options</h5>
+                <p class="card-text fs-3"><%= ticketCount %></p>
+            </div>
+        </div>
+    </div>
+    <!-- Server Members Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-light bg-success h-100 shadow-sm card-hover">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-users fa-3x mb-3"></i>
+                <h5 class="card-title">Total Members</h5>
+                <p class="card-text fs-3"><%= totalMembers %></p>
+            </div>
+        </div>
+    </div>
+    <!-- Online Members Card -->
+    <div class="col-lg-3 col-md-6">
+        <div class="card text-light bg-warning h-100 shadow-sm card-hover">
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-user-check fa-3x mb-3"></i>
+                <h5 class="card-title">Online Members</h5>
+                <p class="card-text fs-3"><%= onlineMembers %></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bot Performance Metrics -->
+<div class="row mt-4 g-4">
+    <!-- Bot Uptime Card -->
+    <div class="col-lg-6 col-md-12">
+        <div class="card text-light bg-info h-100 shadow-sm card-hover">
+            <div class="card-header d-flex align-items-center">
+                <i class="fa-solid fa-clock fa-lg me-2 text-primary"></i>
+                <h5 class="mb-0">Bot Uptime</h5>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-clock fa-3x mb-3"></i>
+                <h5 class="card-title"><%= botUptime %></h5>
+                <p class="card-text">Duration the bot has been running.</p>
+            </div>
+        </div>
+    </div>
+    <!-- Memory Usage Card -->
+    <div class="col-lg-6 col-md-12">
+        <div class="card text-light bg-danger h-100 shadow-sm card-hover">
+            <div class="card-header d-flex align-items-center">
+                <i class="fa-solid fa-memory fa-lg me-2 text-primary"></i>
+                <h5 class="mb-0">Memory Usage</h5>
+            </div>
+            <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                <i class="fa-solid fa-memory fa-3x mb-3"></i>
+                <h5 class="card-title"><%= (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) %> MB</h5>
+                <p class="card-text">Current memory usage of the bot.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Channels and Categories Section -->
+<h4 class="mt-5 text-light">Server Channels & Categories</h4>
+<div class="row">
+    <!-- Channels Table -->
+    <div class="col-lg-6 mb-4">
+        <div class="card text-light bg-dark shadow-sm card-hover">
+            <div class="card-header d-flex align-items-center">
+                <i class="fa-solid fa-hashtag fa-lg me-2 text-primary"></i>
+                <h5 class="mb-0">Channels</h5>
+            </div>
+            <div class="card-body bg-card-background">
+                <% if (channels && channels.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% channels.forEach(channel => { %>
+                                    <tr>
+                                        <td><%= channel.name %></td>
+                                        <td>
+                                            <% if (channel.type === 0) { %>
+                                                <i class="fa-solid fa-message me-1"></i> Text
+                                            <% } else if (channel.type === 2) { %>
+                                                <i class="fa-solid fa-headset me-1"></i> Voice
+                                            <% } else { %>
+                                                Other
+                                            <% } %>
+                                        </td>
+                                        <td><code><%= channel.id %></code></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <p>No channels found.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Table -->
+    <div class="col-lg-6 mb-4">
+        <div class="card text-light bg-dark shadow-sm card-hover">
+            <div class="card-header d-flex align-items-center">
+                <i class="fa-solid fa-layer-group fa-lg me-2 text-primary"></i>
+                <h5 class="mb-0">Categories</h5>
+            </div>
+            <div class="card-body bg-card-background">
+                <% if (categories && categories.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>ID</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% categories.forEach(category => { %>
+                                    <tr>
+                                        <td><%= category.name %></td>
+                                        <td><code><%= category.id %></code></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <p>No categories found.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ticket Options Chart -->
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card text-light bg-dark shadow-sm card-hover">
+            <div class="card-header d-flex align-items-center">
+                <i class="fa-solid fa-chart-pie fa-lg me-2 text-primary"></i>
+                <h5 class="mb-0">Ticket Options Distribution</h5>
+            </div>
+            <div class="card-body bg-card-background">
+                <% if (ticketOptionsLabels.length > 0 && ticketOptionsData.length > 0) { %>
+                    <canvas id="ticketOptionsChart"></canvas>
+                <% } else { %>
+                    <p>No ticket options data available to display.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Custom JS for Chart and Enhancements -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const labels = <%= JSON.stringify(ticketOptionsLabels) %>;
+        const data = <%= JSON.stringify(ticketOptionsData) %>;
+
+        if(labels.length > 0 && data.length > 0) {
+            const ctx = document.getElementById('ticketOptionsChart').getContext('2d');
+            const ticketOptionsChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ticket Options',
+                        data: data,
+                        backgroundColor: [
+                            '#1abc9c',
+                            '#3498db',
+                            '#e74c3c',
+                            '#f1c40f',
+                            '#9b59b6',
+                            '#e67e22',
+                            '#2ecc71',
+                            '#95a5a6',
+                            '#34495e',
+                            '#16a085'
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#dcdde1'
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed;
+                                    }
+                                    return label;
+                                }
+                            },
+                            backgroundColor: '#2c3e50',
+                            titleColor: '#dcdde1',
+                            bodyColor: '#dcdde1'
+                        }
+                    }
+                }
+            });
+        }
+
+        /* =========================
+           Additional Chart Enhancements
+           ========================= */
+        
+        if(ticketOptionsChart){
+            ticketOptionsChart.options.animation = {
+                animateScale: true,
+                animateRotate: true
+            };
+        }
+    });
+</script>

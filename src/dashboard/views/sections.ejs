@@ -1,0 +1,175 @@
+<%- include('partials/header', { pageTitle: 'Sections', activePage: 'sections' }) %>
+
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-light"><%= __('dashboard.sections') %></h2>
+        <button class="btn btn-success btn-lg d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#addSectionModal">
+            <i class="fa-solid fa-plus me-2"></i> <span><%= __('dashboard.addSection') %></span>
+        </button>
+    </div>
+
+    <!-- Alert Messages -->
+    <% if (message) { %>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-check-circle me-2"></i> <%= message %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<%= __('dashboard.close') %>"></button>
+        </div>
+    <% } %>
+    <% if (error) { %>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fa-solid fa-exclamation-triangle me-2"></i> <%= error %>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="<%= __('dashboard.close') %>"></button>
+        </div>
+    <% } %>
+
+    <!-- Sections List -->
+    <div class="row">
+        <% if (config.ticketOptions && config.ticketOptions.length > 0) { %>
+            <% config.ticketOptions.forEach((option, index) => { %>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card card-hover h-100">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <% if(option.emoji) { %>
+                                    <span class="me-2 fs-4"><%= option.emoji %></span>
+                                <% } else { %>
+                                    <i class="fa-solid fa-tags me-2 fs-4"></i>
+                                <% } %>
+                                <h5 class="mb-0 text-primary"><%= option.label %></h5>
+                            </div>
+                            <div>
+                                <!-- Edit Button -->
+                                <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#editSectionModal<%= index %>" title="<%= __('dashboard.editSection') %>">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                <!-- Delete Button -->
+                                <form action="/sections/delete" method="POST" class="d-inline" onsubmit="return confirmDelete()">
+                                    <input type="hidden" name="sectionToDelete" value="<%= option.value %>">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="<%= __('dashboard.deleteSection') %>">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p><strong><%= __('dashboard.assignRole') %>:</strong> 
+                                <span class="badge bg-info text-dark">
+                                    <%= config.optionConfig[option.value]?.roleId ? roles.find(role => role.id === config.optionConfig[option.value].roleId)?.name : 'N/A' %>
+                                </span>
+                            </p>
+                            <p><strong><%= __('dashboard.imageURL') %>:</strong> 
+                                <% if(config.optionConfig[option.value]?.image){ %>
+                                    <a href="<%= config.optionConfig[option.value]?.image %>" target="_blank" class="link-primary">View Image</a>
+                                <% } else { %>
+                                    N/A
+                                <% } %>
+                            </p>
+                            <% if(option.emoji){ %>
+                                <p><strong><%= __('dashboard.emoji') %>:</strong> <span class="badge bg-secondary"><%= option.emoji %></span></p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Section Modal -->
+                <div class="modal fade" id="editSectionModal<%= index %>" tabindex="-1" aria-labelledby="editSectionModalLabel<%= index %>" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-dark">
+                            <form action="/sections/edit" method="POST">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editSectionModalLabel<%= index %>">
+                                        <i class="fa-solid fa-pencil me-2"></i><%= __('dashboard.editSection') %> - <%= option.label %>
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= __('dashboard.close') %>"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="originalSection" value="<%= option.value %>">
+                                    <div class="mb-3">
+                                        <label for="newSectionName<%= index %>" class="form-label"><%= __('dashboard.sectionName') %>:</label>
+                                        <input type="text" class="form-control" id="newSectionName<%= index %>" name="newSectionName" value="<%= option.label %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="roleId<%= index %>" class="form-label"><%= __('dashboard.assignRole') %>:</label>
+                                        <select class="form-select" id="roleId<%= index %>" name="roleId" required>
+                                            <% roles.forEach(role => { %>
+                                                <option value="<%= role.id %>" <%= role.id === config.optionConfig[option.value]?.roleId ? 'selected' : '' %>><%= role.name %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image<%= index %>" class="form-label"><%= __('dashboard.imageURL') %>:</label>
+                                        <input type="url" class="form-control" id="image<%= index %>" name="image" value="<%= config.optionConfig[option.value]?.image %>" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="emoji<%= index %>" class="form-label"><%= __('dashboard.emoji') %>:</label>
+                                        <input type="text" class="form-control" id="emoji<%= index %>" name="emoji" value="<%= option.emoji %>" placeholder="e.g., 💬">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __('dashboard.cancel') %></button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fa-solid fa-save me-1"></i> <%= __('dashboard.saveChanges') %>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="alert alert-warning text-center" role="alert">
+            <i class="fa-solid fa-exclamation-triangle me-2"></i> <%= __('dashboard.noSectionsFound') %>
+        </div>
+    <% } %>
+</div>
+
+<!-- Add Section Modal -->
+<div class="modal fade" id="addSectionModal" tabindex="-1" aria-labelledby="addSectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark">
+            <form action="/sections/add" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSectionModalLabel">
+                        <i class="fa-solid fa-plus me-2"></i><%= __('dashboard.addNewSection') %>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= __('dashboard.close') %>"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="sectionName" class="form-label"><%= __('dashboard.sectionName') %>:</label>
+                        <input type="text" class="form-control" id="sectionName" name="sectionName" placeholder="e.g., Support" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="roleId" class="form-label"><%= __('dashboard.assignRole') %>:</label>
+                        <select class="form-select" id="roleId" name="roleId" required>
+                            <% if (roles && roles.length > 0) { %>
+                                <% roles.forEach(role => { %>
+                                    <option value="<%= role.id %>"><%= role.name %></option>
+                                <% }) %>
+                            <% } else { %>
+                                <option disabled><%= __('dashboard.noRolesFound') %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label"><%= __('dashboard.imageURL') %>:</label>
+                        <input type="url" class="form-control" id="image" name="image" placeholder="https://example.com/image.png" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="emoji" class="form-label"><%= __('dashboard.emoji') %>:</label>
+                        <input type="text" class="form-control" id="emoji" name="emoji" placeholder="e.g., 💬">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __('dashboard.cancel') %></button>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fa-solid fa-plus me-1"></i> <%= __('dashboard.addSection') %>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,23 @@
+{
+  "TOKEN": "TOKEN",
+  "guildID": "ID",
+  "dashboard": {
+    "username": "wick",
+    "password": "wick123",
+    "port": "3000"
+  },
+  "BACKGROUND": "",
+  "LINE": "",
+  "categoryID": "",
+  "logChannel": "",
+  "feedbackLogChannel": "",
+  "language": "ar",
+  "sectionType": "list",
+  "optionConfig": {},
+  "ticketOptions": [],
+  "colors": {
+    "Support": "Primary",
+    "Report": "Primary",
+    "Apply Staff": "Primary"
+  }
+}

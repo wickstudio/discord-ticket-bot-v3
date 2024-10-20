@@ -1,0 +1,648 @@
+/* =========================
+   1. Import External Libraries
+   ========================= */
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css');
+
+/* =========================
+   2. Custom Theme Variables
+   ========================= */
+:root {
+    --primary-color: #00aaff;
+    --primary-hover: #008ecc;
+
+    --secondary-color: #1e1e2f;
+    --secondary-hover: #2a2a45;
+
+    --accent-color: #ff4757;
+    --accent-hover: #e84118;
+
+    --light-color: #f5f6fa;
+    --dark-color: #121214;
+    --text-color: #dcdde1;
+
+    --info-color: #1e90ff;
+    --success-color: #2ed573;
+    --warning-color: #ffa502;
+    --danger-color: #ff6b81;
+    --danger-hover-color: #e84118;
+
+    --background-color: #1e1e2f;
+    --card-background: rgba(30, 30, 47, 0.95);
+    --modal-background: #2a2a45;
+
+    --border-color: #57606f;
+
+    --link-color: var(--primary-color);
+    --link-hover-color: var(--primary-hover);
+
+    --shadow-light: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    --font-family: 'Poppins', sans-serif;
+}
+
+/* =========================
+   3. Global Styles
+   ========================= */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: linear-gradient(rgba(18, 18, 40, 0.85), rgba(18, 18, 40, 0.85)),
+                url('/images/banner.png') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* =========================
+   4. Navbar Customization
+   ========================= */
+.navbar {
+    background-color: var(--secondary-color) !important;
+    box-shadow: var(--shadow-light);
+    padding: 0.75rem 1.5rem;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: var(--primary-color) !important;
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand img {
+    border-radius: 50%;
+    transition: transform 0.3s;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-brand:hover img {
+    transform: rotate(360deg);
+}
+
+.navbar-brand:hover {
+    color: var(--link-hover-color) !important;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+    margin-left: 20px;
+    transition: color 0.3s, transform 0.3s;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: var(--link-hover-color) !important;
+    transform: scale(1.1);
+}
+
+/* =========================
+   5. Dark Mode Toggle Button
+   ========================= */
+
+.form-check-input {
+    display: none;
+}
+
+.form-check-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.form-check-label i {
+    color: #555;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.form-check-input:checked + .form-check-label {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+}
+
+.form-check-input:checked + .form-check-label i {
+    color: #f1c40f;
+    transform: rotate(360deg);
+}
+
+.form-check-label:hover {
+    transform: scale(1.05);
+    background-color: var(--primary-hover);
+}
+
+body.dark-mode .form-check-label {
+    background-color: #00aaff;
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+/* =========================
+   6. Card Styling
+   ========================= */
+
+.card-hover {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-hover:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-dark);
+}
+
+.card-header {
+    background-color: var(--secondary-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header i {
+    color: var(--primary-color);
+    margin-right: 10px;
+}
+
+.card-body {
+    background-color: var(--card-background);
+    color: var(--light-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* =========================
+   7. Accordion Styling
+   ========================= */
+
+.accordion-button {
+    background-color: var(--secondary-color) !important;
+    color: var(--text-color) !important;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: var(--primary-color) !important;
+    color: var(--light-color) !important;
+}
+
+.accordion-button::after {
+    transition: transform 0.3s;
+}
+
+.accordion-button.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+.accordion-button:not(.collapsed)::after {
+    transform: rotate(90deg);
+}
+
+.accordion-item {
+    border: none;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.accordion-item:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-dark);
+}
+
+.accordion-body {
+    background-color: var(--card-background);
+    color: var(--light-color);
+    transition: background-color 0.3s, color 0.3s;
+    padding: 1.5rem;
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* =========================
+   8. Table Styling
+   ========================= */
+
+.table-dark th,
+.table-dark td {
+    color: var(--light-color);
+    background-color: var(--secondary-color);
+}
+
+.table-dark tbody tr:hover {
+    background-color: var(--primary-hover);
+    color: var(--light-color);
+}
+
+code {
+    background-color: var(--secondary-color);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+}
+
+/* =========================
+   9. Chart Styling
+   ========================= */
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* =========================
+   10. Form Styling
+   ========================= */
+.form-label {
+    font-weight: 700;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.form-control,
+.form-select {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    font-size: 1rem;
+}
+
+.form-control::placeholder {
+    color: #95a5a6;
+}
+
+.form-control:focus,
+.form-select:focus {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 170, 255, 0.25);
+}
+
+/* =========================
+   11. Buttons Styling
+   ========================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.btn i {
+    margin-right: 5px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--light-color);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 170, 255, 0.3);
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: var(--light-color);
+}
+
+.btn-success:hover {
+    background-color: var(--secondary-hover);
+    border-color: var(--secondary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 170, 255, 0.3);
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color);
+    color: var(--light-color);
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover-color);
+    border-color: var(--danger-hover-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 170, 255, 0.3);
+}
+
+/* =========================
+   12. Footer Styling
+   ========================= */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    padding: 2rem 0;
+    margin-top: auto;
+    transition: background-color 0.3s;
+}
+
+footer a {
+    color: var(--link-color);
+    transition: color 0.3s, transform 0.3s;
+    margin: 0 15px;
+}
+
+footer a:hover {
+    color: var(--link-hover-color);
+    transform: scale(1.2);
+}
+
+footer p {
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+/* =========================
+   13. Responsive Adjustments
+   ========================= */
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .nav-link {
+        margin-left: 10px;
+        font-size: 0.95rem;
+    }
+
+    .accordion-button {
+        font-size: 1rem;
+    }
+
+    .form-label {
+        font-size: 1rem;
+    }
+
+    .btn {
+        font-size: 0.95rem;
+    }
+
+    .btn i {
+        margin-right: 3px;
+    }
+
+    .container > .text-center h1 {
+        font-size: 2rem;
+    }
+
+    .container > .text-center p.lead {
+        font-size: 1rem;
+    }
+
+    .table th, .table td {
+        font-size: 0.9rem;
+    }
+
+    .card {
+        text-align: center;
+    }
+
+    footer p {
+        font-size: 0.9rem;
+    }
+
+    footer a {
+        margin: 0 10px;
+    }
+}
+
+/* =========================
+   14. Additional
+   ========================= */
+
+.tooltip-inner {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 0.25rem;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+}
+
+body.dark-mode {
+    --background-color: #121214;
+    --card-background: rgba(18, 18, 20, 0.95);
+    --modal-background: #1c1c1e;
+    --text-color: #e0e0e0;
+    --link-color: #00aaff;
+    --link-hover-color: #008ecc;
+}
+
+body.dark-mode .navbar {
+    background-color: #1c1c1e !important;
+}
+
+body.dark-mode .accordion-button {
+    background-color: #1c1c1e !important;
+    color: var(--light-color) !important;
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+    background-color: var(--primary-color) !important;
+    color: var(--light-color) !important;
+}
+
+body.dark-mode .accordion-body {
+    background-color: rgba(28, 28, 30, 0.95);
+}
+
+body.dark-mode .card-header {
+    background-color: #1c1c1e;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+body.dark-mode .card-body {
+    background-color: rgba(28, 28, 30, 0.95);
+}
+
+body.dark-mode .table-dark th,
+body.dark-mode .table-dark td {
+    background-color: var(--secondary-color) !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background-color: #2a2a45;
+    color: var(--text-color);
+    border: 1px solid #3e3e55;
+}
+
+body.dark-mode .form-control::placeholder,
+body.dark-mode .form-text {
+    color: #b2bec3;
+}
+
+body.dark-mode .btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--background-color);
+}
+
+body.dark-mode footer {
+    background-color: #1c1c1e;
+}
+
+body.dark-mode footer a {
+    color: var(--link-color);
+}
+
+/* =========================
+   15. Footer Icon Animations
+   ========================= */
+.footer-icon {
+    position: relative;
+    color: var(--link-color);
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-icon:hover {
+    color: var(--link-hover-color);
+    transform: scale(1.2);
+}
+
+.footer-icon::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-top-color: var(--link-hover-color);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.footer-icon:hover::after {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(45deg) scale(1.5);
+}
+
+/* =========================
+   16. Ticket Display Style Button Group
+   ========================= */
+
+.btn-group .btn {
+    width: 50%;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+.btn-group .btn.active,
+.btn-group .btn:focus,
+.btn-group .btn:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--light-color) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 170, 255, 0.3);
+}
+
+.btn-group .btn i {
+    transition: transform 0.3s;
+}
+
+.btn-group .btn.active i,
+.btn-group .btn:focus i,
+.btn-group .btn:hover i {
+    transform: scale(1.2);
+}
+
+.btn-group .btn span {
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+.btn-group .btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =========================
+   17. Additional Component Styling
+   ========================= */
+
+.form-check-input {
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 170, 255, 0.5);
+}
+
+.navbar-toggler-icon {
+    transition: transform 0.3s;
+}
+
+.navbar-toggler:hover .navbar-toggler-icon {
+    transform: rotate(90deg);
+}
+
+/* =========================
+   18. Responsive Font Sizes
+   ========================= */
+
+@media (max-width: 576px) {
+    .navbar-brand span {
+        display: none;
+    }
+}
