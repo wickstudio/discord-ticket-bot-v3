@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wickstudio/discord-ticket-bot-v2.git"
+    "url": "https://github.com/wickstudio/discord-ticket-bot-v3.git"
   },
   "author": "Wick Studio",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/wickstudio/discord-ticket-bot-v2/issues"
+    "url": "https://github.com/wickstudio/discord-ticket-bot-v3/issues"
   },
-  "homepage": "https://github.com/wickstudio/discord-ticket-bot-v2#readme",
+  "homepage": "https://github.com/wickstudio/discord-ticket-bot-v3#readme",
   "dependencies": {
     "@discordjs/builders": "^1.6.5",
     "better-sqlite3": "^8.7.0",
