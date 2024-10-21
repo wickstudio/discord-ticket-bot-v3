@@ -85,25 +85,32 @@ module.exports = (client) => {
 
             let isUpdated = false;
 
-            const urlPattern = /^(https?:\/\/)[^\s$.?#].[^\s]*$/gm;
+            const isValidURL = (url) => {
+                try {
+                    new URL(url);
+                    return true;
+                } catch (e) {
+                    return false;
+                }
+            };
 
             switch (section) {
                 case 'images':
                     {
                         const { backgroundImageURL, lineImageURL } = req.body;
 
-                        if (!urlPattern.test(backgroundImageURL)) {
+                        if (!backgroundImageURL || !isValidURL(backgroundImageURL)) {
                             console.error('Validation Error: Invalid background image URL provided.');
                             return res.redirect('/settings?error=' + encodeURIComponent('Invalid background image URL provided.'));
                         }
 
-                        if (lineImageURL && !urlPattern.test(lineImageURL)) {
+                        if (lineImageURL && lineImageURL.trim() !== '' && !isValidURL(lineImageURL)) {
                             console.error('Validation Error: Invalid line image URL provided.');
                             return res.redirect('/settings?error=' + encodeURIComponent('Invalid line image URL provided.'));
                         }
 
                         config.BACKGROUND = backgroundImageURL;
-                        config.LINE = lineImageURL || '';
+                        config.LINE = lineImageURL && lineImageURL.trim() !== '' ? lineImageURL : '';
 
                         console.log('Updated Images:');
                         console.log('Background Image URL:', config.BACKGROUND);
