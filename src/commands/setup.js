@@ -32,53 +32,60 @@ module.exports = {
     try {
       await interaction.deferReply({ ephemeral: true });
 
-      const filesToSend = [];
-
       if (client.config.BACKGROUND) {
-        filesToSend.push(new AttachmentBuilder(client.config.BACKGROUND, { name: 'BACKGROUND.png' }));
+        const backgroundAttachment = new AttachmentBuilder(client.config.BACKGROUND, { name: 'BACKGROUND.png' });
+        await interaction.channel.send({ files: [backgroundAttachment] });
         console.log('Background image URL:', client.config.BACKGROUND);
       }
 
+      if (client.config.ticketOptions && client.config.ticketOptions.length > 0) {
+        if (client.config.sectionType === 'list') {
+          const selectMenu = new ActionRowBuilder().addComponents(
+            new StringSelectMenuBuilder()
+              .setCustomId('select')
+              .setPlaceholder(locale.setup.SelectPlaceholder)
+              .addOptions(
+                client.config.ticketOptions.map(option => ({
+                  label: option.label,
+                  value: option.value,
+                  ...(option.emoji ? { emoji: option.emoji } : {})
+                }))
+              )
+          );
+
+          await interaction.channel.send({ components: [selectMenu] });
+        } else {
+          const buttons = client.config.ticketOptions.map(option => {
+            const btn = new ButtonBuilder()
+              .setCustomId(`select*${option.value}`)
+              .setLabel(option.label)
+              .setStyle('Secondary');
+
+            if (option.emoji) {
+              btn.setEmoji(option.emoji);
+            }
+
+            return btn;
+          });
+
+          const buttonRows = [];
+          for (let i = 0; i < buttons.length; i += 5) {
+            buttonRows.push(new ActionRowBuilder().addComponents(buttons.slice(i, i + 5)));
+          }
+
+          for (const row of buttonRows) {
+            await interaction.channel.send({ components: [row] });
+          }
+        }
+      } else {
+        console.warn('No ticket options configured.');
+      }
+
       if (client.config.LINE) {
-        filesToSend.push(new AttachmentBuilder(client.config.LINE, { name: 'LINE.png' }));
+        const lineAttachment = new AttachmentBuilder(client.config.LINE, { name: 'LINE.png' });
+        await interaction.channel.send({ files: [lineAttachment] });
         console.log('Line image URL:', client.config.LINE);
       }
-
-      const selectMenu = new ActionRowBuilder().addComponents(
-        new StringSelectMenuBuilder()
-          .setCustomId('select')
-          .setPlaceholder(locale.setup.SelectPlaceholder)
-          .addOptions(
-            client.config.ticketOptions.map(option => ({
-              label: option.label,
-              value: option.value,
-              ...(option.emoji ? { emoji: option.emoji } : {})
-            }))
-          )
-      );
-
-      const buttons = [];
-      for (const button of client.config.ticketOptions) {
-        const btn = new ButtonBuilder()
-          .setCustomId(`select*${button.value}`)
-          .setLabel(button.label)
-          .setStyle('Secondary');
-
-        if (button.emoji) {
-          btn.setEmoji(button.emoji);
-        }
-        buttons.push(btn);
-      }
-
-      const rows = [];
-      for (let i = 0; i < buttons.length; i += 5) {
-        rows.push(new ActionRowBuilder().addComponents(buttons.slice(i, i + 5)));
-      }
-
-      const components = client.config.sectionType === 'list' ? [selectMenu] : rows;
-
-      const messagePayload = { files: filesToSend, components: components.length ? components : [] };
-      await interaction.channel.send(messagePayload);
 
       await interaction.editReply({ content: locale.setup.success, ephemeral: true });
     } catch (error) {
